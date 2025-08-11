@@ -1,4 +1,4 @@
-create database ficha;
+--create database ficha;
 
 create table origem(
 	id_origem serial primary key,
@@ -294,8 +294,8 @@ foreign key (id_alcance) references alcance(id_alcance);
 alter table relva add constraint fk_execucao
 foreign key (id_execucao) references execucao(id_execucao);
 
-alter table relva add constraint fk_alcance
-foreign key (id_alcance) references alcance(id_alcance);
+alter table relva add constraint fk_pericia
+foreign key (id_pericia_resistencia) references pericia(id_pericia);
 
 
 
@@ -362,10 +362,10 @@ foreign key (id_talento) references talento(id_talento);
 alter table requisito_proficiencias add constraint fk_req_proficiencias
 foreign key (id_talento) references talento(id_talento);
 
-alter table requisito_pericias add constraint fk_req_pericias
+alter table requisito_pericias add constraint fk_req_pericias_talento
 foreign key (id_talento) references talento(id_talento);
 
-alter table requisito_pericias add constraint fk_req_pericia
+alter table requisito_pericias add constraint fk_req_pericia_pericia
 foreign key (id_pericia) references pericia(id_pericia);
 
 alter table requisito_talentos add constraint fk_req_talento
@@ -399,6 +399,7 @@ foreign key (id_pericia) references pericia(id_pericia);
 
 alter table devocao_defesa add constraint fk_devocao
 foreign key (id_devocao) references devocao(id_devocao);
+
 
 
 
