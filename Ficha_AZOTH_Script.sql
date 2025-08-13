@@ -402,4 +402,28 @@ foreign key (id_devocao) references devocao(id_devocao);
 
 
 
+insert into dano_tipo(nome)
+values 
+('Corte'),
+('Impacto'),
+('Perfuração'),
+('Balistico'),
+('Termico'),
+('Ambição'),
+('Fome'),
+('Fogo'),
+('Podre'),
+('Marcado'),
+('Real'),
+('Mental');
+
+insert into alcance(nome, metros)
+values
+(),
+();
+
+
+
+
+
 
