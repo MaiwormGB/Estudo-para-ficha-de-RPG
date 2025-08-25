@@ -77,7 +77,8 @@ create table alcance(
 create table talento(
 	id_talento serial primary key,
 	nome varchar(30) not null,
-	descricao text not null
+	descricao text not null,
+	exclusivo bool not null
 
 );
 
@@ -99,17 +100,18 @@ create table mod(
 
 create table cacador(
 	id_cacador serial primary key,
-	nome_cacador varchar(50) not null,
-	nome_jogador varchar(50) not null,
-	pv_maximo int not null,
-	pv_atual int not null,
-	san_maximo int not null,
-	san_atual int not null,
-	pe_maximo int not null,
-	pe_atual int not null,
-	pec int not null,
-	id_origem int not null,
-	id_devocao int
+	nome_cacador varchar(50),
+	nome_jogador varchar(50),
+	pv_maximo int not null default 0,
+	pv_atual int not null default 0,
+	san_maximo int not null default 0,
+	san_atual int not null default 0,
+	pe_maximo int not null default 0,
+	pe_atual int not null default 0,
+	pec int not null default 0,
+	id_origem int not null default 0,
+	id_devocao int,
+	id_cadastro int not null
 	
 );
 
@@ -265,6 +267,31 @@ create table execucao(
 
 );
 
+create table cargo(
+	id_cargo serial primary key,
+	nome varchar(30) not null
+
+);
+
+create table cadastro(
+	id_cadastro serial primary key,
+	nome varchar (50) not null,
+	senha varchar (20) not null,
+	id_cargo int not null default 1 references cargo(id_cargo)
+
+);
+
+create table updlog(
+	id_updlog serial primary key,
+	nome varchar (50),
+	data_inicio date,
+	data_final date default now(),
+	mudanca text,
+	nota_final text
+
+);
+
+
 --ORGANIZAR O NOME DOS FKS
 
 alter table arma add constraint fk_dano_tipo
@@ -401,14 +428,14 @@ alter table devocao_defesa add constraint fk_devocao
 foreign key (id_devocao) references devocao(id_devocao);
 
 
-
 insert into dano_tipo(nome)
 values 
 ('Corte'),
 ('Impacto'),
 ('Perfuração'),
 ('Balistico'),
-('Termico'),
+('Fisico'),
+('Térmico'),
 ('Ambição'),
 ('Fome'),
 ('Fogo'),
@@ -417,12 +444,11 @@ values
 ('Real'),
 ('Mental');
 
-insert into alcance(nome, metros)
+insert into cargo(nome)
 values
-(),
-();
-
-
+('Jogador'),
+('Colaborador'),
+('Mivomi/Main dev');
 
 
 
