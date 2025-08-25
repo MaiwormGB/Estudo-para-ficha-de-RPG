@@ -277,6 +277,8 @@ create table cadastro(
 	id_cadastro serial primary key,
 	nome varchar (50) not null,
 	senha varchar (20) not null,
+	bio text,
+	imagem bytea,
 	id_cargo int not null default 1 references cargo(id_cargo)
 
 );
@@ -449,6 +451,7 @@ values
 ('Jogador'),
 ('Colaborador'),
 ('Mivomi/Main dev');
+
 
 
 
