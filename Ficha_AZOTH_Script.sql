@@ -74,8 +74,16 @@ create table alcance(
 
 );
 
+create table imagem_talento(
+	id_imagem_talento serial primary key,
+	nome varchar(30),
+	imagem bytea not null
+
+);
+
 create table talento(
 	id_talento serial primary key,
+	id_imagem_talento int  not null references imagem_talento(id_imagem_talento)
 	nome varchar(30) not null,
 	descricao text not null,
 	exclusivo bool not null
@@ -96,6 +104,38 @@ create table mod(
 	nome varchar(30) not null,
 	valor int not null
 	
+);
+
+create table execucao(
+	id_execucao serial primary key,
+	nome varchar(30) not null
+
+);
+
+create table cargo(
+	id_cargo serial primary key,
+	nome varchar(30) not null
+
+);
+
+create table cadastro(
+	id_cadastro serial primary key,
+	nome varchar (50) not null,
+	senha varchar (20) not null,
+	bio text,
+	imagem bytea,
+	id_cargo int not null default 1 references cargo(id_cargo)
+
+);
+
+create table updlog(
+	id_updlog serial primary key,
+	nome varchar (50),
+	data_inicio date,
+	data_final date default now(),
+	mudanca text,
+	nota_final text
+
 );
 
 create table cacador(
@@ -179,6 +219,7 @@ create table resistencia(
 create table identificacao(
 	id_cacador int not null,
 	nome_completo varchar(60),
+	imagem bytea,
 	idade varchar(4),
 	peso numeric(4,1),
 	altura numeric (3,2),
@@ -258,38 +299,6 @@ create table devocao_pericia(
 create table devocao_defesa(
 	id_devocao int not null,
 	valor int not null
-
-);
-
-create table execucao(
-	id_execucao serial primary key,
-	nome varchar(30) not null
-
-);
-
-create table cargo(
-	id_cargo serial primary key,
-	nome varchar(30) not null
-
-);
-
-create table cadastro(
-	id_cadastro serial primary key,
-	nome varchar (50) not null,
-	senha varchar (20) not null,
-	bio text,
-	imagem bytea,
-	id_cargo int not null default 1 references cargo(id_cargo)
-
-);
-
-create table updlog(
-	id_updlog serial primary key,
-	nome varchar (50),
-	data_inicio date,
-	data_final date default now(),
-	mudanca text,
-	nota_final text
 
 );
 
@@ -451,7 +460,6 @@ values
 ('Jogador'),
 ('Colaborador'),
 ('Mivomi/Main dev');
-
 
 
 
