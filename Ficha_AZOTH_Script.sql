@@ -57,7 +57,8 @@ create table relva(
 
 create table dano_tipo(
 	id_dano_tipo serial primary key,
-	nome varchar(30) not null
+	nome varchar(30) not null,
+	descricao text not null
 
 );
 
@@ -74,6 +75,20 @@ create table alcance(
 
 );
 
+create table status_tipo(
+	id_status_tipo serial primary key,
+	nome varchar (30)
+
+);
+
+create table status(
+	id_status serial primary key,
+	nome varchar(30) not null,
+	descricao text not null,
+	id_status_tipo int not null references status_tipo(id_status_tipo)
+
+);
+
 create table imagem_talento(
 	id_imagem_talento serial primary key,
 	nome varchar(30),
@@ -83,10 +98,17 @@ create table imagem_talento(
 
 create table talento(
 	id_talento serial primary key,
-	id_imagem_talento int  not null references imagem_talento(id_imagem_talento)
+	id_imagem_talento int  not null references imagem_talento(id_imagem_talento),
 	nome varchar(30) not null,
 	descricao text not null,
 	exclusivo bool not null
+
+);
+
+create table item_categoria(
+	id_item_categoria serial primary key,
+	nome varchar(30),
+	descricao text
 
 );
 
@@ -95,7 +117,8 @@ create table item(
 	nome varchar(100) not null,
 	descricao text not null,
 	peso int,
-	id_mod int
+	id_mod int,
+	id_item_categoria int not null references item_categoria(id_item_categoria)
 
 );
 
@@ -133,8 +156,7 @@ create table updlog(
 	nome varchar (50),
 	data_inicio date,
 	data_final date default now(),
-	mudanca text,
-	nota_final text
+	mudanca text
 
 );
 
@@ -209,6 +231,11 @@ create table cacador_proficiencias(
 
 );
 
+create table cacador_status(
+	id_cacador int not null references cacador(id_cacador),
+	id_status int not null references status(id_status)
+);
+
 create table resistencia(
 	id_dano_tipo int not null,
 	id_cacador int not null,
@@ -268,6 +295,12 @@ create table requisito_devocao(
 
 );
 
+create table requisito_relva(
+	id_talento int not null references talento(id_talento),
+	id_relva int not null references relva(id_relva)
+
+);
+
 create table requisito_arma_atributos(
 	id_arma int not null,
 	atributo varchar(30) not null,
@@ -281,6 +314,12 @@ create table requisito_arma_proficiencias(
 	valor_minimo int not null
 	
 );
+
+create table requisito_relva_relva(
+	id_relva int not null references relva(id_relva),
+	id_relva_requerida int not null references relva(id_relva)
+);
+
 
 create table devocao_atributo(
 	id_devocao int not null,
@@ -438,29 +477,31 @@ foreign key (id_pericia) references pericia(id_pericia);
 alter table devocao_defesa add constraint fk_devocao
 foreign key (id_devocao) references devocao(id_devocao);
 
+alter table cacador add constraint fk_cadastro
+foreign key (id_cadastro) references cadastro(id_cadastro);
 
-insert into dano_tipo(nome)
-values 
-('Corte'),
-('Impacto'),
-('Perfuração'),
-('Balistico'),
-('Fisico'),
-('Térmico'),
-('Ambição'),
-('Fome'),
-('Fogo'),
-('Podre'),
-('Marcado'),
-('Real'),
-('Mental');
+
+--insert into dano_tipo(nome)
+--values 
+--('Corte'),
+--('Impacto'),
+--('Perfuração'),
+--('Balistico'),
+--('Fisico'),
+--('Térmico'),
+--('Ambição'),
+--('Fome'),
+--('Fogo'),
+--('Podre'),
+--('Marcado'),
+--('Real'),
+--('Mental');
 
 insert into cargo(nome)
 values
 ('Jogador'),
 ('Colaborador'),
 ('Mivomi/Main dev');
-
 
 
 
